@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#080b0e">
+<title>Transport Kalkulator PRO V1.2</title>
+<link rel="manifest" href="./manifest.webmanifest?v=12">
+<link rel="icon" href="./icon-192.png?v=12">
+<link rel="apple-touch-icon" href="./icon-192.png?v=12">
+<link rel="stylesheet" href="./style.css?v=12">
+</head>
+<body>
+<header>
+<img src="./icon-192.png?v=12" alt="KP Logo">
+<div><small>TRANSPORT</small><h1>KALKULATOR <b>PRO</b></h1><span>Kurierservice Patzig · VERSION 1.2</span></div>
+</header>
+<main>
+<section id="calc" class="page active">
+<div class="title"><div><em>AUFTRAGS-EINGABE</em><h2>Kalkulator</h2></div><strong>V1.2</strong></div>
+<div class="card grid">
+<label class="wide">Start (PLZ oder Ort)<input id="start" value=""></label>
+<label class="wide">Ziel (PLZ oder Ort)<input id="ziel" value=""></label>
+<label>Lastkilometer<input id="last" type="number" value="450"></label>
+<label>Anfahrt km<input id="anf" type="number" value="150"></label>
+<label>Leerfahrt km<input id="leer" type="number" value="80"></label>
+<label>Ladung<input id="ladung" value=""></label>
+<label>Nutzlast kg<input id="nutz" type="number" value="0"></label>
+<label>Paletten<input id="pal" type="number" value="4"></label>
+<button id="berechnen" class="yellow wide">BERECHNEN</button>
+</div>
+<div class="card">
+<em>ERGEBNIS</em>
+<div class="row"><span>Zielpreis</span><b id="preis">0,00 €</b></div>
+<div class="row"><span>Kosten</span><b id="kosten">0,00 €</b></div>
+<div class="row"><span>Gewinn</span><b class="green" id="gewinn">0,00 €</b></div>
+<div class="row"><span>Gewinnmarge</span><b class="green" id="marge">0,0 %</b></div>
+<div class="row"><span>Umsatz / gefahrenem km</span><b id="upk">0,00 €/km</b></div>
+<div id="ampel" class="ampel"><i></i><b id="ampeltext"></b></div>
+</div>
+<button id="speichern" class="yellow full">💾 AUFTRAG SPEICHERN</button>
+</section>
+
+<section id="preise" class="page">
+<div class="title"><div><em>SCHNELL-PREISLISTE</em><h2>Preise</h2></div></div>
+<div class="card tablewrap"><table><thead><tr><th>Last-km</th><th>Ziel</th><th>Verhandlung</th><th>Untergrenze</th></tr></thead><tbody id="pt"></tbody></table></div>
+</section>
+
+<section id="orders" class="page">
+<div class="title"><div><em>AUFTRÄGE</em><h2>Auftragsübersicht</h2></div></div>
+<div class="stats">
+<div><span>Anzahl</span><b id="anz">0</b></div><div><span>Gesamtumsatz</span><b class="green" id="ums">0,00 €</b></div>
+<div><span>Gesamtgewinn</span><b class="green" id="gg">0,00 €</b></div><div><span>Ø Marge</span><b class="green" id="gm">0,0 %</b></div>
+</div>
+<div class="card"><input id="suche" placeholder="Aufträge durchsuchen"><div id="liste"></div></div>
+<button id="csv" class="yellow full">CSV EXPORTIEREN</button>
+</section>
+
+<section id="vehicle" class="page">
+<div class="title"><div><em>FAHRZEUG & KOSTEN</em><h2>Fahrzeug</h2></div></div>
+<div class="card grid">
+<label>Fahrzeug<input id="fahrzeug" value="VW Crafter"></label>
+<label>Max. Paletten<input id="maxpal" type="number" value="4"></label>
+<label>Max. Nutzlast kg<input id="maxnutz" type="number" value="970"></label>
+<label>Ladehöhe m<input id="hoehe" type="number" step=".01" value="1.50"></label>
+<label>Diesel €/Liter<input id="diesel" type="number" step=".01" value="2.59"></label>
+<label>Verbrauch l/100 km<input id="verbrauch" type="number" step=".1" value="9.5"></label>
+<label>Fahrzeugkosten €/km<input id="fk" type="number" step=".01" value=".25"></label>
+<label>Sonstige Kosten €/km<input id="sk" type="number" step=".01" value=".05"></label>
+</div>
+</section>
+
+<section id="settings" class="page">
+<div class="title"><div><em>EINSTELLUNGEN</em><h2>Preislogik</h2></div></div>
+<div class="card grid">
+<label>Zielpreis €/Last-km<input id="zielrate" type="number" step=".01" value="1.00"></label>
+<label>Verhandlung €/Last-km<input id="verhrate" type="number" step=".01" value=".90"></label>
+<label>Untergrenze €/Last-km<input id="unterrate" type="number" step=".01" value=".73"></label>
+<label>Mindestpreis €<input id="minpreis" type="number" value="100"></label>
+<label>Grün ab €/gefahrenem km<input id="gruen" type="number" step=".01" value=".90"></label>
+<label>Gelb ab €/gefahrenem km<input id="gelb" type="number" step=".01" value=".70"></label>
+</div>
+<div class="card info"><b>KURIERSERVICE PATZIG</b><p>Transport Kalkulator PRO · Version 1.2</p><p>Support: g.patzig1203@gmail.com</p><small>Kalkulationshilfe – keine Steuer-, Rechts- oder Unternehmensberatung.</small></div>
+</section>
+</main>
+
+<nav>
+<button data-page="calc" class="on">▦<small>Kalkulator</small></button>
+<button data-page="preise">▤<small>Preisliste</small></button>
+<button data-page="orders">▣<small>Aufträge</small></button>
+<button data-page="vehicle">▰<small>Fahrzeug</small></button>
+<button data-page="settings">⚙<small>Einstellungen</small></button>
+</nav>
+<script src="./app.js?v=12"></script>
+</body></html>
