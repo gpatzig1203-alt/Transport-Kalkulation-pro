@@ -845,7 +845,7 @@ if ('serviceWorker' in navigator) {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ licenseKey: licenseKey })
+        body: JSON.stringify({ licenseKey: licenseKey, deviceId: getDeviceId() })
       });
 
       const daten = await antwort.json();
