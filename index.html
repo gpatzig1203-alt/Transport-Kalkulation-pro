@@ -822,9 +822,7 @@ if ('serviceWorker' in navigator) {
   const button = document.getElementById('lizenzButton');
   const meldung = document.getElementById('lizenzMeldung');
 
-  if (localStorage.getItem('tkp32_lizenz_aktiv') === 'ja') {
-    sperre.style.display = 'none';
-  }
+  
 
   button.addEventListener('click', async function () {
     const licenseKey = keyFeld.value.trim();
