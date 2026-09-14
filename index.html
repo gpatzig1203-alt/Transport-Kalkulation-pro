@@ -816,7 +816,14 @@ if ('serviceWorker' in navigator) {
 (function () {
   const server =
     'https://transport-kalkulator-lizenz.g-patzig1203.workers.dev';
-
+function getDeviceId() {
+  let id = localStorage.getItem('tkp32_device_id');
+  if (!id) {
+    id = crypto.randomUUID();
+    localStorage.setItem('tkp32_device_id', id);
+  }
+  return id;
+}
   const sperre = document.getElementById('lizenzSperre');
   const keyFeld = document.getElementById('lizenzKey');
   const button = document.getElementById('lizenzButton');
