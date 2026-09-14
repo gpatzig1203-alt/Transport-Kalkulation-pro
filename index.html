@@ -783,5 +783,93 @@ if ('serviceWorker' in navigator) {
   });
 }
  </script>
+<!-- Transport Kalkulator PRO 3.2 – Lizenzaktivierung -->
+<div id="lizenzSperre" style="position:fixed;inset:0;z-index:99999;background:#090c0f;color:white;display:flex;align-items:center;justify-content:center;padding:20px;font-family:Arial,sans-serif;">
+  <div style="width:100%;max-width:420px;background:#12171c;border:1px solid #ffbe00;border-radius:18px;padding:24px;text-align:center;">
+    
+    <div style="color:#ffbe00;font-size:14px;font-weight:bold;">
+      TRANSPORT KALKULATOR PRO 3.2
+    </div>
+
+    <h2 style="margin:12px 0 8px;">Lizenz aktivieren</h2>
+
+    <p style="color:#bbb;line-height:1.5;">
+      Bitte geben Sie Ihren Payhip-Lizenzschlüssel ein.
+    </p>
+
+    <input id="lizenzKey"
+      type="text"
+      placeholder="Lizenzschlüssel"
+      autocomplete="off"
+      style="width:100%;box-sizing:border-box;padding:14px;margin:12px 0;border-radius:10px;border:1px solid #555;background:#090c0f;color:white;font-size:16px;">
+
+    <button id="lizenzButton"
+      style="width:100%;padding:14px;border:0;border-radius:10px;background:#ffbe00;color:#111;font-size:16px;font-weight:bold;">
+      LIZENZ AKTIVIEREN
+    </button>
+
+    <div id="lizenzMeldung" style="margin-top:15px;min-height:22px;"></div>
+  </div>
+</div>
+
+<script>
+(function () {
+  const server =
+    'https://transport-kalkulator-lizenz.g-patzig1203.workers.dev';
+
+  const sperre = document.getElementById('lizenzSperre');
+  const keyFeld = document.getElementById('lizenzKey');
+  const button = document.getElementById('lizenzButton');
+  const meldung = document.getElementById('lizenzMeldung');
+
+  if (localStorage.getItem('tkp32_lizenz_aktiv') === 'ja') {
+    sperre.style.display = 'none';
+  }
+
+  button.addEventListener('click', async function () {
+    const licenseKey = keyFeld.value.trim();
+
+    if (!licenseKey) {
+      meldung.style.color = '#ff6b6b';
+      meldung.textContent = 'Bitte Lizenzschlüssel eingeben.';
+      return;
+    }
+
+    button.disabled = true;
+    meldung.style.color = '#ffbe00';
+    meldung.textContent = 'Lizenz wird geprüft …';
+
+    try {
+      const antwort = await fetch(server + '/license/verify', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ licenseKey: licenseKey })
+      });
+
+      const daten = await antwort.json();
+
+      if (daten.valid === true) {
+        localStorage.setItem('tkp32_lizenz_aktiv', 'ja');
+        meldung.style.color = '#63d471';
+        meldung.textContent = '✓ Lizenz erfolgreich aktiviert';
+
+        setTimeout(function () {
+          sperre.style.display = 'none';
+        }, 800);
+      } else {
+        meldung.style.color = '#ff6b6b';
+        meldung.textContent = 'Lizenzschlüssel ungültig oder deaktiviert.';
+      }
+    } catch (fehler) {
+      meldung.style.color = '#ff6b6b';
+      meldung.textContent = 'Lizenzserver nicht erreichbar. Bitte erneut versuchen.';
+    }
+
+    button.disabled = false;
+  });
+})();
+</script>
 </body>
 </html>
