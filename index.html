@@ -870,9 +870,14 @@ if (localStorage.getItem('tkp32_lizenz_aktiv') === 'ja') {
           sperre.style.display = 'none';
         }, 800);
       } else {
-        meldung.style.color = '#ff6b6b';
-        meldung.textContent = 'Lizenzschlüssel ungültig oder deaktiviert.';
-      }
+  meldung.style.color = '#ff6b6b';
+
+  if (daten.limitReached === true) {
+    meldung.textContent = 'Maximal 2 Geräte erlaubt. Diese Lizenz ist bereits auf 2 Geräten aktiviert.';
+  } else {
+    meldung.textContent = daten.error || 'Lizenzschlüssel ungültig oder deaktiviert.';
+  }
+}
     } catch (fehler) {
       meldung.style.color = '#ff6b6b';
       meldung.textContent = 'Lizenzserver nicht erreichbar. Bitte erneut versuchen.';
