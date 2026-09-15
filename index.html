@@ -829,10 +829,40 @@ function getDeviceId() {
   const button = document.getElementById('lizenzButton');
   const meldung = document.getElementById('lizenzMeldung');
 
- // Bereits auf diesem Gerät aktiviert
-if (localStorage.getItem('tkp32_lizenz_aktiv') === 'ja') {
-  sperre.style.display = 'none';
- }
+ // Gespeicherte Lizenz beim Start erneut am Server prüfen
+(async function pruefeGespeicherteLizenz() {
+  const gespeicherterKey = localStorage.getItem('tkp32_lizenz_key');
+
+  if (!gespeicherterKey) {
+    return;
+  }
+
+  try {
+    const antwort = await fetch(server + '/license/verify', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        licenseKey: gespeicherterKey,
+        deviceId: getDeviceId()
+      })
+    });
+
+    const daten = await antwort.json();
+
+    if (daten.valid === true) {
+      localStorage.setItem('tkp32_lizenz_aktiv', 'ja');
+      sperre.style.display = 'none';
+    } else {
+      localStorage.removeItem('tkp32_lizenz_aktiv');
+      localStorage.removeItem('tkp32_lizenz_key');
+      sperre.style.display = 'flex';
+    }
+  } catch (fehler) {
+    sperre.style.display = 'flex';
+  }
+})();
   
 
   button.addEventListener('click', async function () {
