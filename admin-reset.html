@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transport Kalkulator PRO – Lizenzverwaltung</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #0b0b0b;
+      color: #ffffff;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .box {
+      width: 100%;
+      max-width: 480px;
+      background: #151515;
+      border: 2px solid #d4af37;
+      border-radius: 18px;
+      padding: 28px 20px;
+      box-shadow: 0 0 30px rgba(212,175,55,0.15);
+    }
+
+    h1 {
+      color: #d4af37;
+      text-align: center;
+      margin: 0 0 8px;
+      font-size: 25px;
+    }
+
+    h2 {
+      text-align: center;
+      margin: 0 0 25px;
+      font-size: 18px;
+      font-weight: normal;
+    }
+
+    label {
+      display: block;
+      margin-top: 16px;
+      margin-bottom: 7px;
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      border-radius: 9px;
+      border: 1px solid #555;
+      background: #050505;
+      color: white;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 22px;
+      padding: 15px;
+      border: 0;
+      border-radius: 9px;
+      background: #d4af37;
+      color: #000;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: 0.6;
+    }
+
+    #meldung {
+      margin-top: 20px;
+      text-align: center;
+      min-height: 24px;
+      font-weight: bold;
+    }
+
+    .hinweis {
+      margin-top: 22px;
+      color: #aaa;
+      font-size: 13px;
+      line-height: 1.5;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="box">
+
+  <h1>TRANSPORT KALKULATOR PRO 3.2</h1>
+  <h2>Lizenzverwaltung</h2>
+
+  <label for="licenseKey">Lizenzschlüssel des Kunden</label>
+  <input
+    id="licenseKey"
+    type="text"
+    autocomplete="off"
+    placeholder="Payhip-Lizenzschlüssel"
+  >
+
+  <label for="adminSecret">Admin-Passwort</label>
+  <input
+    id="adminSecret"
+    type="password"
+    autocomplete="off"
+    placeholder="Admin-Passwort"
+  >
+
+  <button id="resetButton" type="button">
+    GERÄTEPLÄTZE ZURÜCKSETZEN
+  </button>
+
+  <div id="meldung"></div>
+
+  <div class="hinweis">
+    Nur für die interne Lizenzverwaltung.<br>
+    Beim Zurücksetzen werden die gespeicherten Geräteplätze
+    dieser Lizenz freigegeben.
+  </div>
+
+</div>
+
+<script>
+const RESET_URL =
+  "https://transport-kalkulator-lizenz.g-patzig1203.workers.dev/admin/reset";
+
+const button = document.getElementById("resetButton");
+const meldung = document.getElementById("meldung");
+
+button.addEventListener("click", async () => {
+
+  const licenseKey =
+    document.getElementById("licenseKey").value.trim();
+
+  const adminSecret =
+    document.getElementById("adminSecret").value.trim();
+
+  if (!licenseKey || !adminSecret) {
+    meldung.style.color = "#ff6b6b";
+    meldung.textContent =
+      "Bitte Lizenzschlüssel und Admin-Passwort eingeben.";
+    return;
+  }
+
+  const sicher = confirm(
+    "Wirklich alle Geräteplätze dieser Lizenz zurücksetzen?"
+  );
+
+  if (!sicher) return;
+
+  button.disabled = true;
+  meldung.style.color = "#d4af37";
+  meldung.textContent = "Zurücksetzen läuft...";
+
+  try {
+
+    const response = await fetch(RESET_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        licenseKey: licenseKey,
+        adminSecret: adminSecret
+      })
+    });
+
+    const daten = await response.json();
+
+    if (response.ok && daten.ok === true) {
+
+      meldung.style.color = "#63d471";
+      meldung.textContent =
+        "✓ Geräteplätze erfolgreich zurückgesetzt.";
+
+      document.getElementById("licenseKey").value = "";
+
+    } else {
+
+      meldung.style.color = "#ff6b6b";
+      meldung.textContent =
+        daten.error || "Zurücksetzen fehlgeschlagen.";
+
+    }
+
+  } catch (fehler) {
+
+    meldung.style.color = "#ff6b6b";
+    meldung.textContent =
+      "Verbindung zum Lizenzserver fehlgeschlagen.";
+
+  } finally {
+
+    button.disabled = false;
+
+  }
+});
+</script>
+
+</body>
+</html>
