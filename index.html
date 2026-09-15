@@ -845,7 +845,8 @@ function getDeviceId() {
       },
       body: JSON.stringify({
         licenseKey: gespeicherterKey,
-        deviceId: getDeviceId()
+        deviceId: getDeviceId(),
+        mode: 'check'
       })
     });
 
