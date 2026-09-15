@@ -829,6 +829,10 @@ function getDeviceId() {
   const button = document.getElementById('lizenzButton');
   const meldung = document.getElementById('lizenzMeldung');
 
+ // Bereits auf diesem Gerät aktiviert
+if (localStorage.getItem('tkp32_lizenz_aktiv') === 'ja') {
+  sperre.style.display = 'none';
+ }
   
 
   button.addEventListener('click', async function () {
