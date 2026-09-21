@@ -3,11 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Transport Kalkulator PRO – Lizenzverwaltung</title>
- 
+
   <link rel="icon" type="image/png" href="./icon-192.png">
   <link rel="apple-touch-icon" href="./icon-192.png">
-  
+
   <style>
     * {
       box-sizing: border-box;
@@ -19,20 +20,23 @@
       background: #0b0b0b;
       color: #ffffff;
       font-family: Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
       padding: 20px;
+    }
+
+    .wrapper {
+      width: 100%;
+      max-width: 480px;
+      margin: 30px auto;
     }
 
     .box {
       width: 100%;
-      max-width: 480px;
       background: #151515;
       border: 2px solid #d4af37;
       border-radius: 18px;
       padding: 28px 20px;
-      box-shadow: 0 0 30px rgba(212,175,55,0.15);
+      box-shadow: 0 0 30px rgba(212, 175, 55, 0.15);
+      margin-bottom: 25px;
     }
 
     h1 {
@@ -49,6 +53,13 @@
       font-weight: normal;
     }
 
+    h3 {
+      color: #d4af37;
+      text-align: center;
+      margin: 0 0 20px;
+      font-size: 20px;
+    }
+
     label {
       display: block;
       margin-top: 16px;
@@ -56,7 +67,8 @@
       font-weight: bold;
     }
 
-    input {
+    input,
+    textarea {
       width: 100%;
       padding: 14px;
       border-radius: 9px;
@@ -64,6 +76,13 @@
       background: #050505;
       color: white;
       font-size: 16px;
+    }
+
+    textarea {
+      min-height: 220px;
+      resize: vertical;
+      font-family: monospace;
+      line-height: 1.5;
     }
 
     button {
@@ -81,9 +100,10 @@
 
     button:disabled {
       opacity: 0.6;
+      cursor: not-allowed;
     }
 
-    #meldung {
+    .meldung {
       margin-top: 20px;
       text-align: center;
       min-height: 24px;
@@ -97,67 +117,190 @@
       line-height: 1.5;
       text-align: center;
     }
+
+    .trenner {
+      width: 80px;
+      height: 2px;
+      background: #d4af37;
+      margin: 0 auto 20px;
+    }
+
+    .copyButton {
+      display: none;
+      background: #ffffff;
+      color: #000000;
+    }
   </style>
 </head>
 
 <body>
 
-<div class="box">
+<div class="wrapper">
 
-  <h1>TRANSPORT KALKULATOR PRO 3.2</h1>
-  <h2>Lizenzverwaltung</h2>
+  <!-- ========================================= -->
+  <!-- GERÄTEPLÄTZE ZURÜCKSETZEN                 -->
+  <!-- ========================================= -->
 
-  <label for="licenseKey">Lizenzschlüssel des Kunden</label>
-  <input
-    id="licenseKey"
-    type="text"
-    autocomplete="off"
-    placeholder="Payhip-Lizenzschlüssel"
-  >
+  <div class="box">
 
-  <label for="adminSecret">Admin-Passwort</label>
-  <input
-    id="adminSecret"
-    type="password"
-    autocomplete="off"
-    placeholder="Admin-Passwort"
-  >
+    <h1>TRANSPORT KALKULATOR PRO 3.2</h1>
+    <h2>Lizenzverwaltung</h2>
 
-  <button id="resetButton" type="button">
-    GERÄTEPLÄTZE ZURÜCKSETZEN
-  </button>
+    <label for="licenseKey">
+      Lizenzschlüssel des Kunden
+    </label>
 
-  <div id="meldung"></div>
+    <input
+      id="licenseKey"
+      type="text"
+      autocomplete="off"
+      placeholder="Lizenzschlüssel"
+    >
 
-  <div class="hinweis">
-    Nur für die interne Lizenzverwaltung.<br>
-    Beim Zurücksetzen werden die gespeicherten Geräteplätze
-    dieser Lizenz freigegeben.
+    <label for="adminSecretReset">
+      Admin-Passwort
+    </label>
+
+    <input
+      id="adminSecretReset"
+      type="password"
+      autocomplete="off"
+      placeholder="Admin-Passwort"
+    >
+
+    <button id="resetButton" type="button">
+      GERÄTEPLÄTZE ZURÜCKSETZEN
+    </button>
+
+    <div id="resetMeldung" class="meldung"></div>
+
+    <div class="hinweis">
+      Nur für die interne Lizenzverwaltung.<br>
+      Beim Zurücksetzen werden die gespeicherten
+      Geräteplätze dieser Lizenz freigegeben.
+    </div>
+
+  </div>
+
+
+  <!-- ========================================= -->
+  <!-- SHOPIFY LIZENZSCHLÜSSEL ERZEUGEN          -->
+  <!-- ========================================= -->
+
+  <div class="box">
+
+    <h3>SHOPIFY-LIZENZSCHLÜSSEL</h3>
+
+    <div class="trenner"></div>
+
+    <label for="anzahl">
+      Anzahl der Lizenzschlüssel
+    </label>
+
+    <input
+      id="anzahl"
+      type="number"
+      min="1"
+      max="100"
+      value="10"
+      inputmode="numeric"
+    >
+
+    <label for="adminSecretGenerate">
+      Admin-Passwort
+    </label>
+
+    <input
+      id="adminSecretGenerate"
+      type="password"
+      autocomplete="off"
+      placeholder="Admin-Passwort"
+    >
+
+    <button id="generateButton" type="button">
+      LIZENZSCHLÜSSEL ERZEUGEN
+    </button>
+
+    <div id="generateMeldung" class="meldung"></div>
+
+    <div id="resultArea" style="display:none;">
+
+      <label for="generatedKeys">
+        Erzeugte Lizenzschlüssel
+      </label>
+
+      <textarea
+        id="generatedKeys"
+        readonly
+      ></textarea>
+
+      <button
+        id="copyButton"
+        class="copyButton"
+        type="button"
+      >
+        ALLE SCHLÜSSEL KOPIEREN
+      </button>
+
+    </div>
+
+    <div class="hinweis">
+      Die erzeugten Shopify-Lizenzschlüssel werden
+      automatisch im Lizenzserver registriert.<br><br>
+
+      Anschließend können dieselben Schlüssel bei
+      Pendora Downloads eingefügt werden.<br><br>
+
+      Ein Schlüssel = eine Kundenlizenz.<br>
+      Pro Lizenz sind maximal 2 Geräteplätze vorgesehen.
+    </div>
+
   </div>
 
 </div>
 
+
 <script>
+const WORKER_URL =
+  "https://transport-kalkulator-lizenz.g-patzig1203.workers.dev";
+
 const RESET_URL =
-  "https://transport-kalkulator-lizenz.g-patzig1203.workers.dev/admin/reset";
+  WORKER_URL + "/admin/reset";
 
-const button = document.getElementById("resetButton");
-const meldung = document.getElementById("meldung");
+const GENERATE_URL =
+  WORKER_URL + "/admin/generate-shopify-keys";
 
-button.addEventListener("click", async () => {
+
+/* ============================================= */
+/* GERÄTEPLÄTZE ZURÜCKSETZEN                     */
+/* ============================================= */
+
+const resetButton =
+  document.getElementById("resetButton");
+
+const resetMeldung =
+  document.getElementById("resetMeldung");
+
+
+resetButton.addEventListener("click", async () => {
 
   const licenseKey =
     document.getElementById("licenseKey").value.trim();
 
   const adminSecret =
-    document.getElementById("adminSecret").value.trim();
+    document.getElementById("adminSecretReset").value.trim();
+
 
   if (!licenseKey || !adminSecret) {
-    meldung.style.color = "#ff6b6b";
-    meldung.textContent =
+
+    resetMeldung.style.color = "#ff6b6b";
+
+    resetMeldung.textContent =
       "Bitte Lizenzschlüssel und Admin-Passwort eingeben.";
+
     return;
   }
+
 
   const sicher = confirm(
     "Wirklich alle Geräteplätze dieser Lizenz zurücksetzen?"
@@ -165,52 +308,247 @@ button.addEventListener("click", async () => {
 
   if (!sicher) return;
 
-  button.disabled = true;
-  meldung.style.color = "#d4af37";
-  meldung.textContent = "Zurücksetzen läuft...";
+
+  resetButton.disabled = true;
+
+  resetMeldung.style.color = "#d4af37";
+
+  resetMeldung.textContent =
+    "Zurücksetzen läuft...";
+
 
   try {
 
     const response = await fetch(RESET_URL, {
+
       method: "POST",
+
       headers: {
         "Content-Type": "application/json"
       },
+
       body: JSON.stringify({
         licenseKey: licenseKey,
         adminSecret: adminSecret
       })
+
     });
+
 
     const daten = await response.json();
 
+
     if (response.ok && daten.ok === true) {
 
-      meldung.style.color = "#63d471";
-      meldung.textContent =
+      resetMeldung.style.color = "#63d471";
+
+      resetMeldung.textContent =
         "✓ Geräteplätze erfolgreich zurückgesetzt.";
 
       document.getElementById("licenseKey").value = "";
 
     } else {
 
-      meldung.style.color = "#ff6b6b";
-      meldung.textContent =
+      resetMeldung.style.color = "#ff6b6b";
+
+      resetMeldung.textContent =
         daten.error || "Zurücksetzen fehlgeschlagen.";
 
     }
 
   } catch (fehler) {
 
-    meldung.style.color = "#ff6b6b";
-    meldung.textContent =
+    resetMeldung.style.color = "#ff6b6b";
+
+    resetMeldung.textContent =
       "Verbindung zum Lizenzserver fehlgeschlagen.";
 
   } finally {
 
-    button.disabled = false;
+    resetButton.disabled = false;
 
   }
+
+});
+
+
+/* ============================================= */
+/* SHOPIFY-LIZENZSCHLÜSSEL ERZEUGEN              */
+/* ============================================= */
+
+const generateButton =
+  document.getElementById("generateButton");
+
+const generateMeldung =
+  document.getElementById("generateMeldung");
+
+const resultArea =
+  document.getElementById("resultArea");
+
+const generatedKeys =
+  document.getElementById("generatedKeys");
+
+const copyButton =
+  document.getElementById("copyButton");
+
+
+generateButton.addEventListener("click", async () => {
+
+  const anzahl =
+    Number(document.getElementById("anzahl").value);
+
+  const adminSecret =
+    document.getElementById("adminSecretGenerate").value.trim();
+
+
+  if (!Number.isInteger(anzahl) || anzahl < 1 || anzahl > 100) {
+
+    generateMeldung.style.color = "#ff6b6b";
+
+    generateMeldung.textContent =
+      "Bitte eine Anzahl zwischen 1 und 100 eingeben.";
+
+    return;
+  }
+
+
+  if (!adminSecret) {
+
+    generateMeldung.style.color = "#ff6b6b";
+
+    generateMeldung.textContent =
+      "Bitte das Admin-Passwort eingeben.";
+
+    return;
+  }
+
+
+  generateButton.disabled = true;
+
+  resultArea.style.display = "none";
+
+  copyButton.style.display = "none";
+
+  generatedKeys.value = "";
+
+  generateMeldung.style.color = "#d4af37";
+
+  generateMeldung.textContent =
+    "Lizenzschlüssel werden erzeugt...";
+
+
+  try {
+
+    const response = await fetch(GENERATE_URL, {
+
+      method: "POST",
+
+      headers: {
+        "Content-Type": "application/json"
+      },
+
+      body: JSON.stringify({
+        adminSecret: adminSecret,
+        count: anzahl
+      })
+
+    });
+
+
+    const daten = await response.json();
+
+
+    if (
+      response.ok &&
+      daten.ok === true &&
+      Array.isArray(daten.keys)
+    ) {
+
+      generatedKeys.value =
+        daten.keys.join("\n");
+
+      resultArea.style.display = "block";
+
+      copyButton.style.display = "block";
+
+      generateMeldung.style.color = "#63d471";
+
+      generateMeldung.textContent =
+        "✓ " +
+        daten.keys.length +
+        " Lizenzschlüssel erfolgreich erzeugt.";
+
+    } else {
+
+      generateMeldung.style.color = "#ff6b6b";
+
+      generateMeldung.textContent =
+        daten.error ||
+        "Lizenzschlüssel konnten nicht erzeugt werden.";
+
+    }
+
+  } catch (fehler) {
+
+    generateMeldung.style.color = "#ff6b6b";
+
+    generateMeldung.textContent =
+      "Verbindung zum Lizenzserver fehlgeschlagen.";
+
+  } finally {
+
+    generateButton.disabled = false;
+
+  }
+
+});
+
+
+/* ============================================= */
+/* SCHLÜSSEL KOPIEREN                            */
+/* ============================================= */
+
+copyButton.addEventListener("click", async () => {
+
+  const text = generatedKeys.value;
+
+  if (!text) return;
+
+
+  try {
+
+    await navigator.clipboard.writeText(text);
+
+    copyButton.textContent =
+      "✓ SCHLÜSSEL KOPIERT";
+
+    setTimeout(() => {
+
+      copyButton.textContent =
+        "ALLE SCHLÜSSEL KOPIEREN";
+
+    }, 2000);
+
+  } catch (fehler) {
+
+    generatedKeys.focus();
+
+    generatedKeys.select();
+
+    document.execCommand("copy");
+
+    copyButton.textContent =
+      "✓ SCHLÜSSEL KOPIERT";
+
+    setTimeout(() => {
+
+      copyButton.textContent =
+        "ALLE SCHLÜSSEL KOPIEREN";
+
+    }, 2000);
+
+  }
+
 });
 </script>
 
