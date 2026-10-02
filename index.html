@@ -726,7 +726,20 @@ loadSettings(); calc(); renderOrders();
 
 
 // Verkaufsversion 3.0: Firmendaten, Dokumente und Backup
-const extraPersistentIds=['companyName','ownerName','companyPhone','companyAddress','companyEmail','companyTax','vatRate','paymentDays'];
+const extraPersistentIds=[
+  'companyName',
+  'ownerName',
+  'companyPhone',
+  'companyAddress',
+  'companyEmail',
+  'companyTax',
+  'vatRate',
+  'paymentDays',
+  'bankOwner',
+  'bankIban',
+  'bankBic',
+  'bankName'
+];
 function loadExtra(){
  const d=JSON.parse(localStorage.getItem('tkp20_company')||'{}');
  extraPersistentIds.forEach(id=>{if($(id)&&d[id]!==undefined)$(id).value=d[id]});
