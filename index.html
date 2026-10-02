@@ -570,7 +570,7 @@ function buildPriceTable(){
     tb.innerHTML += `<tr><td>${km} km</td><td>${euro(t)}</td><td>${euro(n)}</td><td>${euro(u)}</td></tr>`;
   }
 }
-
+ 
 function getOrders(){ return JSON.parse(localStorage.getItem('tkp12_orders') || '[]'); }
 function setOrders(v){ localStorage.setItem('tkp12_orders', JSON.stringify(v)); }
 
