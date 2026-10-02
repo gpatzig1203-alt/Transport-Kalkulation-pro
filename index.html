@@ -375,6 +375,11 @@ th:first-child,td:first-child{text-align:left}
     <div class="field"><label>Steuernummer / USt-ID</label><input id="companyTax"></div>
     <div class="field"><label>MwSt. %</label><input id="vatRate" type="number" value="19" step="1"></div>
     <div class="field"><label>Zahlungsziel Tage</label><input id="paymentDays" type="number" value="14"></div>
+  
+   <div class="field span2"><label>Kontoinhaber</label><input id="bankOwner" placeholder="z. B. Kurierdienst Patzig"></div>
+<div class="field span2"><label>IBAN</label><input id="bankIban" placeholder="DE00 0000 0000 0000 0000 00"></div>
+<div class="field"><label>BIC</label><input id="bankBic" placeholder="z. B. GENODEF1XXX"></div>
+<div class="field"><label>Bank</label><input id="bankName" placeholder="Name der Bank"></div>
     <button class="secondary span2" id="backupBtn">⬇ Datensicherung erstellen</button>
     <label class="secondary span2" style="text-align:center;cursor:pointer">⬆ Datensicherung einlesen<input id="restoreFile" type="file" accept="application/json" style="display:none"></label>
   </section>
