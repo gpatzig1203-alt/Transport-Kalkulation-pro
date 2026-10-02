@@ -754,8 +754,40 @@ function openDocument(mode){
  $('docCustomer').value=$('customer').value||'';
  $('docDate').value=today;$('docService').value=$('cargo').value||'Transport / Direktfahrt';$('docStart').value=$('start').value;$('docZiel').value=$('ziel').value;$('docKm').value=num('lastKm');$('docNet').value=r.price.toFixed(2);updateDoc();$('docView').classList.remove('hidden');
 }
-function updateDoc(){let n=parseFloat($('docNet').value)||0,v=n*(num('vatRate')/100);$('docNetOut').textContent=euro(n);$('docVatOut').textContent=euro(v);$('docGrossOut').textContent=euro(n+v);let x=JSON.parse(localStorage.getItem('tkp20_company')||'{}');$('docCompany').innerHTML=`<hr><b>${escapeHtml(x.companyName||'Ihre Firma')}</b><br>${escapeHtml(x.ownerName||'')}<br>${escapeHtml(x.companyAddress||'')}<br>${escapeHtml(x.companyPhone||'')} ${escapeHtml(x.companyEmail||'')}<br>${x.companyTax?'Steuerangabe: '+escapeHtml(x.companyTax):''}`;$('docPaymentNote').textContent=documentMode==='offer'?'Angebot freibleibend. Preis netto zzgl. '+(num('vatRate')||0)+' % MwSt.':'Zahlungsziel: '+(num('paymentDays')||0)+' Tage. Bitte Rechnungs-Pflichtangaben vor Versand prüfen.';}
-$('offerBtn').onclick=()=>openDocument('offer');$('invoiceBtn').onclick=()=>openDocument('invoice');$('docBack').onclick=()=>$('docView').classList.add('hidden');$('docNet').oninput=updateDoc;$('printDocBtn').onclick=()=>window.print();
+function updateDoc(){
+  let n=parseFloat($('docNet').value)||0,
+      v=n*(num('vatRate')/100);
+
+  $('docNetOut').textContent=euro(n);
+  $('docVatOut').textContent=euro(v);
+  $('docGrossOut').textContent=euro(n+v);
+
+  let x=JSON.parse(localStorage.getItem('tkp20_company')||'{}');
+
+  let bank='';
+  if(x.bankOwner || x.bankIban || x.bankBic || x.bankName){
+    bank=`<br><br><b>Bankverbindung</b><br>
+    ${x.bankOwner?'Kontoinhaber: '+escapeHtml(x.bankOwner)+'<br>':''}
+    ${x.bankName?'Bank: '+escapeHtml(x.bankName)+'<br>':''}
+    ${x.bankIban?'IBAN: '+escapeHtml(x.bankIban)+'<br>':''}
+    ${x.bankBic?'BIC: '+escapeHtml(x.bankBic):''}`;
+  }
+
+  $('docCompany').innerHTML=`
+    <hr>
+    <b>${escapeHtml(x.companyName||'Ihre Firma')}</b><br>
+    ${escapeHtml(x.ownerName||'')}<br>
+    ${escapeHtml(x.companyAddress||'')}<br>
+    ${escapeHtml(x.companyPhone||'')} ${escapeHtml(x.companyEmail||'')}<br>
+    ${x.companyTax?'Steuerangabe: '+escapeHtml(x.companyTax):''}
+    ${bank}
+  `;
+
+  $('docPaymentNote').textContent=
+    documentMode==='offer'
+    ? 'Angebot freibleibend. Preis netto zzgl. '+(num('vatRate')||0)+' % MwSt.'
+    : 'Zahlungsziel: '+(num('paymentDays')||0)+' Tage. Bitte Rechnungs-Pflichtangaben vor Versand prüfen.';
+ }
 function backupAll(){let data={version:'3.2',settings:JSON.parse(localStorage.getItem('tkp12_settings')||'{}'),company:JSON.parse(localStorage.getItem('tkp20_company')||'{}'),orders:getOrders()};let b=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='transport-kalkulator-backup.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)}
 $('backupBtn').onclick=backupAll;$('restoreFile').onchange=e=>{let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let d=JSON.parse(r.result);if(d.settings)localStorage.setItem('tkp12_settings',JSON.stringify(d.settings));if(d.company)localStorage.setItem('tkp20_company',JSON.stringify(d.company));if(d.orders)setOrders(d.orders);alert('Datensicherung eingelesen. Die App wird neu geladen.');location.reload()}catch(_){alert('Die Sicherungsdatei konnte nicht gelesen werden.')}};r.readAsText(f)};
 loadExtra();
