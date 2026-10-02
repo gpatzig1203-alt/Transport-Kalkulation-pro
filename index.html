@@ -788,6 +788,8 @@ function updateDoc(){
     ? 'Angebot freibleibend. Preis netto zzgl. '+(num('vatRate')||0)+' % MwSt.'
     : 'Zahlungsziel: '+(num('paymentDays')||0)+' Tage. Bitte Rechnungs-Pflichtangaben vor Versand prüfen.';
  }
+ $('offerBtn').onclick=()=>openDocument('offer');
+$('invoiceBtn').onclick=()=>openDocument('invoice');
 function backupAll(){let data={version:'3.2',settings:JSON.parse(localStorage.getItem('tkp12_settings')||'{}'),company:JSON.parse(localStorage.getItem('tkp20_company')||'{}'),orders:getOrders()};let b=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='transport-kalkulator-backup.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)}
 $('backupBtn').onclick=backupAll;$('restoreFile').onchange=e=>{let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let d=JSON.parse(r.result);if(d.settings)localStorage.setItem('tkp12_settings',JSON.stringify(d.settings));if(d.company)localStorage.setItem('tkp20_company',JSON.stringify(d.company));if(d.orders)setOrders(d.orders);alert('Datensicherung eingelesen. Die App wird neu geladen.');location.reload()}catch(_){alert('Die Sicherungsdatei konnte nicht gelesen werden.')}};r.readAsText(f)};
 loadExtra();
