@@ -1,7 +1,8 @@
 <!doctype html>
 <html lang="de">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0a0d10">
 <link rel="manifest" href="./manifest.webmanifest">
@@ -133,11 +134,11 @@ th:first-child,td:first-child{text-align:left}
 .kpi-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:12px 0}
 .kpi-card{background:linear-gradient(180deg,#1b2229,#11161a);border:1px solid #29323a;border-radius:15px;padding:14px}
 .kpi-card span{display:block;color:var(--muted);font-size:.72rem}.kpi-card strong{display:block;margin-top:6px;font-size:1.25rem}
-.quick-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.quick-grid button{min-height:58px}
+.quick-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.quick-grid button{min-height:48px;padding:10px 8px;font-size:.9rem;line-height:1.3;overflow-wrap:anywhere}.quick-grid .primary{box-shadow:none}
 .customer-strip{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .doc-note{margin-top:12px;padding:12px;border:1px solid #ddd;border-radius:8px;background:#fafafa;color:#222}
 .badge{display:inline-flex;align-items:center;padding:5px 9px;border-radius:999px;background:#252c33;color:#ddd;font-size:.72rem;font-weight:800}
-@media(max-width:520px){.customer-strip{grid-template-columns:1fr}.kpi-grid{grid-template-columns:1fr 1fr}.app-header{padding:11px 12px}.brand img{width:42px;height:42px}.panel{padding:12px}.field input,.field select{font-size:16px}}
+@media(max-width:520px){.quick-grid{gap:8px}.quick-grid button{font-size:.84rem;min-height:46px;padding:9px 6px}.kpi-card{padding:11px}.kpi-card strong{font-size:1.1rem}.dashboard-hero{padding:14px}.dashboard-hero h1{font-size:1.22rem}.customer-strip{grid-template-columns:1fr}.kpi-grid{grid-template-columns:1fr 1fr}.app-header{padding:11px 12px}.brand img{width:42px;height:42px}.panel{padding:12px}.field input,.field select{font-size:16px}}
 
 
 .route-btn{width:100%;border:1px solid #705813;background:linear-gradient(180deg,#f5c94e,#d9a91f);color:#111;font-weight:900;border-radius:12px;padding:14px 12px;box-shadow:0 7px 22px #0005}
@@ -183,7 +184,7 @@ th:first-child,td:first-child{text-align:left}
       <div class="brand-main">KALKULATOR <span>PRO</span></div>
     </div>
   </div>
-  <button class="icon-btn" id="menuBtn">â˜°</button>
+  <button class="icon-btn" id="menuBtn">☰</button>
 </header>
 
 <main>
@@ -192,22 +193,22 @@ th:first-child,td:first-child{text-align:left}
   <div class="dashboard-hero">
     <div class="eyebrow">TRANSPORT KALKULATOR PRO 3.3</div>
     <h1>Dein Transport-Dashboard</h1>
-    <p>Kalkulation â†’ Auftrag â†’ Angebot â†’ Rechnung. Alles in einem Ablauf.</p>
+    <p>Kalkulation → Auftrag → Angebot → Rechnung. Alles in einem Ablauf.</p>
   </div>
   <div class="kpi-grid">
-    <div class="kpi-card"><span>AuftrÃ¤ge gesamt</span><strong id="dashCount">0</strong></div>
-    <div class="kpi-card"><span>Umsatz netto</span><strong class="green-text" id="dashRevenue">0,00 â‚¬</strong></div>
-    <div class="kpi-card"><span>Gewinn</span><strong class="green-text" id="dashProfit">0,00 â‚¬</strong></div>
+    <div class="kpi-card"><span>Aufträge gesamt</span><strong id="dashCount">0</strong></div>
+    <div class="kpi-card"><span>Umsatz netto</span><strong class="green-text" id="dashRevenue">0,00 €</strong></div>
+    <div class="kpi-card"><span>Gewinn</span><strong class="green-text" id="dashProfit">0,00 €</strong></div>
     <div class="kpi-card"><span>Gefahrene km</span><strong id="dashKm">0 km</strong></div>
   </div>
   <section class="panel">
     <div class="eyebrow">SCHNELLSTART</div>
-    <h2 style="margin-top:6px">Was mÃ¶chtest du machen?</h2>
+    <h2 style="margin:5px 0 12px;font-size:1.1rem">Was möchtest du machen?</h2>
     <div class="quick-grid">
-      <button class="primary" onclick="showTab('kalkulator')">ï¼‹ Neue Kalkulation</button>
-      <button class="secondary" onclick="showTab('auftraege')">ðŸ“¦ AuftrÃ¤ge Ã¶ffnen</button>
-      <button class="secondary" onclick="openDocument('offer')">ðŸ“„ Angebot</button>
-      <button class="secondary" onclick="openDocument('invoice')">ðŸ§¾ Rechnung</button>
+      <button class="primary" onclick="showTab('kalkulator')">Neue Kalkulation</button>
+      <button class="secondary" onclick="showTab('auftraege')">Aufträge öffnen</button>
+      <button class="secondary" onclick="openDocument('offer')">Angebot erstellen</button>
+      <button class="secondary" onclick="openDocument('invoice')">Rechnung erstellen</button>
     </div>
   </section>
   <section class="panel">
@@ -230,16 +231,16 @@ th:first-child,td:first-child{text-align:left}
     <div class="field"><label>Auftragsnummer</label><input id="orderNo" placeholder="z. B. A-2026-001"></div>
     <div class="field"><label>Abholung</label><input id="pickupDate" type="datetime-local"></div>
     <div class="field span2">
-      <label>Start â€“ StraÃŸe, Hausnr., PLZ, Ort</label>
+      <label>Start – Straße, Hausnr., PLZ, Ort</label>
       <input id="start" value="" placeholder="z. B. Rieder Str. 19C, 34305 Niedenstein">
     </div>
     <div class="field span2">
-      <label>Ziel â€“ StraÃŸe, Hausnr., PLZ, Ort</label>
-      <input id="ziel" value="" placeholder="z. B. MÃ¶nckebergstraÃŸe 1, 20095 Hamburg">
+      <label>Ziel – Straße, Hausnr., PLZ, Ort</label>
+      <input id="ziel" value="" placeholder="z. B. Mönckebergstraße 1, 20095 Hamburg">
     </div>
     <div class="field span2">
-      <button class="route-btn" id="routeBtn" type="button">ðŸ—ºï¸ STRECKE AUTOMATISCH BERECHNEN</button>
-      <div id="routeStatus" class="route-status">Start und Ziel vollstÃ¤ndig eingeben.</div>
+      <button class="route-btn" id="routeBtn" type="button">🗺️ STRECKE AUTOMATISCH BERECHNEN</button>
+      <div id="routeStatus" class="route-status">Start und Ziel vollständig eingeben.</div>
     </div>
     <div class="field">
       <label>Entfernung (Last-km)</label>
@@ -259,7 +260,7 @@ th:first-child,td:first-child{text-align:left}
     </div>
     <div class="field">
       <label>Ladung</label>
-      <input id="cargo" value="MÃ¶bel">
+      <input id="cargo" value="Möbel">
     </div>
     <div class="field">
       <label>Anfahrt (km)</label>
@@ -271,7 +272,7 @@ th:first-child,td:first-child{text-align:left}
     </div>
 
     <div class="toggle-row span2">
-      <label class="switch-wrap">Hin- & RÃ¼ckfahrt
+      <label class="switch-wrap">Hin- & Rückfahrt
         <input id="roundTrip" type="checkbox">
         <span class="switch"></span>
       </label>
@@ -281,17 +282,17 @@ th:first-child,td:first-child{text-align:left}
       </label>
     </div>
 
-    <div class="field span2"><div class="api-help">Die automatisch berechneten Kilometer kommen vom zentralen Routing-Server. Vor einem verbindlichen Angebot die Strecke bei Bedarf nochmals prÃ¼fen.</div></div>
+    <div class="field span2"><div class="api-help">Die automatisch berechneten Kilometer kommen vom zentralen Routing-Server. Vor einem verbindlichen Angebot die Strecke bei Bedarf nochmals prüfen.</div></div>
     <button class="primary span2" id="calcBtn">BERECHNEN</button>
   </section>
 
   <section class="panel result-panel">
     <div class="eyebrow">ERGEBNIS</div>
-    <div class="metric-row"><span>Preis</span><strong id="price">0,00 â‚¬</strong></div>
-    <div class="metric-row"><span>Kosten</span><strong id="cost">0,00 â‚¬</strong></div>
-    <div class="metric-row"><span>Gewinn</span><strong class="green-text" id="profit">0,00 â‚¬</strong></div>
+    <div class="metric-row"><span>Preis</span><strong id="price">0,00 €</strong></div>
+    <div class="metric-row"><span>Kosten</span><strong id="cost">0,00 €</strong></div>
+    <div class="metric-row"><span>Gewinn</span><strong class="green-text" id="profit">0,00 €</strong></div>
     <div class="metric-row"><span>Gewinnmarge</span><strong class="green-text" id="margin">0,0 %</strong></div>
-    <div class="metric-row"><span>Umsatz / gefahrenem km</span><strong id="revPerKm">0,00 â‚¬/km</strong></div>
+    <div class="metric-row"><span>Umsatz / gefahrenem km</span><strong id="revPerKm">0,00 €/km</strong></div>
     <div id="traffic" class="traffic green">
       <span class="dot"></span>
       <strong id="trafficText">Sehr guter Auftrag</strong>
@@ -299,10 +300,10 @@ th:first-child,td:first-child{text-align:left}
   </section>
 
   <div class="action-grid">
-    <button class="secondary" id="saveOrderBtn">ðŸ’¾ Auftrag speichern</button>
-    <button class="secondary" id="clearBtn">â†º Eingabe leeren</button>
-    <button class="secondary" id="offerBtn">ðŸ“„ Angebot erstellen</button>
-    <button class="secondary" id="invoiceBtn">ðŸ§¾ Rechnung erstellen</button>
+    <button class="secondary" id="saveOrderBtn">💾 Auftrag speichern</button>
+    <button class="secondary" id="clearBtn">↺ Eingabe leeren</button>
+    <button class="secondary" id="offerBtn">Angebot erstellen erstellen</button>
+    <button class="secondary" id="invoiceBtn">Rechnung erstellen erstellen</button>
   </div>
 </section>
 
@@ -326,17 +327,17 @@ th:first-child,td:first-child{text-align:left}
 <section id="tab-auftraege" class="tab">
   <div class="section-head">
     <div>
-      <div class="eyebrow">AUFTRÃ„GE</div>
-      <h2>Ãœbersicht</h2>
+      <div class="eyebrow">AUFTRÄGE</div>
+      <h2>Übersicht</h2>
     </div>
-    <button class="round-btn" id="newOrderBtn">ï¼‹</button>
+    <button class="round-btn" id="newOrderBtn">＋</button>
   </div>
 
   <section class="summary-grid">
-    <div class="summary-box"><span>Anzahl</span><strong id="sumCount">0</strong><small>AuftrÃ¤ge</small></div>
-    <div class="summary-box"><span>Gesamtumsatz</span><strong class="green-text" id="sumRevenue">0,00 â‚¬</strong></div>
-    <div class="summary-box"><span>Gesamtgewinn</span><strong class="green-text" id="sumProfit">0,00 â‚¬</strong></div>
-    <div class="summary-box"><span>Ã˜ Gewinnmarge</span><strong class="green-text" id="sumMargin">0,0 %</strong></div>
+    <div class="summary-box"><span>Anzahl</span><strong id="sumCount">0</strong><small>Aufträge</small></div>
+    <div class="summary-box"><span>Gesamtumsatz</span><strong class="green-text" id="sumRevenue">0,00 €</strong></div>
+    <div class="summary-box"><span>Gesamtgewinn</span><strong class="green-text" id="sumProfit">0,00 €</strong></div>
+    <div class="summary-box"><span>Ø Gewinnmarge</span><strong class="green-text" id="sumMargin">0,0 %</strong></div>
   </section>
 
   <section class="panel">
@@ -362,12 +363,12 @@ th:first-child,td:first-child{text-align:left}
   <section class="panel settings-grid">
     <div class="field"><label>Max. Paletten</label><input id="pallets" type="number" value="4"></div>
     <div class="field"><label>Max. Nutzlast kg</label><input id="maxPayload" type="number" value="970"></div>
-    <div class="field"><label>LadehÃ¶he m</label><input id="height" type="number" step=".01" value="1.50"></div>
-    <div class="field"><label>Diesel â‚¬/Liter</label><input id="dieselPrice" type="number" step=".01" value="2.59"></div>
+    <div class="field"><label>Ladehöhe m</label><input id="height" type="number" step=".01" value="1.50"></div>
+    <div class="field"><label>Diesel €/Liter</label><input id="dieselPrice" type="number" step=".01" value="2.59"></div>
     <div class="field"><label>Verbrauch l/100 km</label><input id="consumption" type="number" step=".1" value="9.5"></div>
-    <div class="field"><label>Fahrzeugkosten â‚¬/km</label><input id="vehicleCost" type="number" step=".01" value=".25"></div>
-    <div class="field"><label>Sonstige Kosten â‚¬/km</label><input id="otherCost" type="number" step=".01" value=".05"></div>
-    <div class="field"><label>Maut pauschal â‚¬</label><input id="tollFlat" type="number" step=".01" value="0"></div>
+    <div class="field"><label>Fahrzeugkosten €/km</label><input id="vehicleCost" type="number" step=".01" value=".25"></div>
+    <div class="field"><label>Sonstige Kosten €/km</label><input id="otherCost" type="number" step=".01" value=".05"></div>
+    <div class="field"><label>Maut pauschal €</label><input id="tollFlat" type="number" step=".01" value="0"></div>
   </section>
 </section>
 
@@ -383,11 +384,11 @@ th:first-child,td:first-child{text-align:left}
         <option value="driving-hgv">LKW / Schwerverkehr</option>
       </select>
     </div>
-    <div class="field"><label>Zielpreis â‚¬/Last-km</label><input id="targetRate" type="number" step=".01" value="1.00"></div>
-    <div class="field"><label>Verhandlung â‚¬/Last-km</label><input id="negRate" type="number" step=".01" value=".90"></div>
-    <div class="field"><label>Untergrenze â‚¬/Last-km</label><input id="minRate" type="number" step=".01" value=".73"></div>
-    <div class="field"><label>Mindestpreis â‚¬</label><input id="minimumPrice" type="number" value="100"></div>
-    <div class="field"><label>GrÃ¼n ab Umsatz/km</label><input id="greenThreshold" type="number" step=".01" value=".90"></div>
+    <div class="field"><label>Zielpreis €/Last-km</label><input id="targetRate" type="number" step=".01" value="1.00"></div>
+    <div class="field"><label>Verhandlung €/Last-km</label><input id="negRate" type="number" step=".01" value=".90"></div>
+    <div class="field"><label>Untergrenze €/Last-km</label><input id="minRate" type="number" step=".01" value=".73"></div>
+    <div class="field"><label>Mindestpreis €</label><input id="minimumPrice" type="number" value="100"></div>
+    <div class="field"><label>Grün ab Umsatz/km</label><input id="greenThreshold" type="number" step=".01" value=".90"></div>
     <div class="field"><label>Gelb ab Umsatz/km</label><input id="yellowThreshold" type="number" step=".01" value=".70"></div>
   </section>
   <section class="panel settings-grid">
@@ -404,34 +405,34 @@ th:first-child,td:first-child{text-align:left}
 <div class="field span2"><label>IBAN</label><input id="bankIban" placeholder="DE00 0000 0000 0000 0000 00"></div>
 <div class="field"><label>BIC</label><input id="bankBic" placeholder="z. B. GENODEF1XXX"></div>
 <div class="field"><label>Bank</label><input id="bankName" placeholder="Name der Bank"></div>
-    <button class="secondary span2" id="backupBtn">â¬‡ Datensicherung erstellen</button>
-    <label class="secondary span2" style="text-align:center;cursor:pointer">â¬† Datensicherung einlesen<input id="restoreFile" type="file" accept="application/json" style="display:none"></label>
+    <button class="secondary span2" id="backupBtn">⬇ Datensicherung erstellen</button>
+    <label class="secondary span2" style="text-align:center;cursor:pointer">⬆ Datensicherung einlesen<input id="restoreFile" type="file" accept="application/json" style="display:none"></label>
   </section>
   <section class="panel legal">
     <div class="eyebrow">TRANSPORT KALKULATOR PRO</div>
-    <p>Transport Kalkulator PRO Â· Verkaufsversion 3.3</p>
-    <p>Alle Firmendaten kÃ¶nnen vom KÃ¤ufer selbst eingetragen werden.</p>
+    <p>Transport Kalkulator PRO · Verkaufsversion 3.3</p>
+    <p>Alle Firmendaten können vom Käufer selbst eingetragen werden.</p>
     <p class="muted">Dieses Tool ist eine Kalkulationshilfe und ersetzt keine Steuer-, Rechts- oder Unternehmensberatung.</p>
   </section>
 </section>
 
 <section id="docView" class="detail-modal hidden">
   <div class="detail-card doc-card">
-    <button class="back-btn no-print" id="docBack">â† ZurÃ¼ck</button>
+    <button class="back-btn no-print" id="docBack">← Zurück</button>
     <div class="eyebrow" id="docKind">DOKUMENT</div><h2 id="docTitle">Angebot</h2>
     <div class="settings-grid">
       <div class="field span2"><label>Kunde / Firma</label><input id="docCustomer"></div>
       <div class="field span2 invoice-address-field" style="padding:12px;border:2px solid #ffbe00;border-radius:12px">
-<label for="docCustomerAddress" style="font-size:1rem;color:#ffbe00">ðŸ“ Rechnungsadresse des Kunden</label>
-<textarea id="docCustomerAddress" rows="4" placeholder="StraÃŸe und Hausnummer&#10;PLZ und Ort&#10;Land (optional)" style="width:100%;background:#f4f4f4;color:#111;border:0;border-radius:9px;padding:12px;font:inherit;resize:vertical"></textarea>
+<label for="docCustomerAddress" style="font-size:1rem;color:#ffbe00">📍 Rechnungsadresse des Kunden</label>
+<textarea id="docCustomerAddress" rows="4" placeholder="Straße und Hausnummer&#10;PLZ und Ort&#10;Land (optional)" style="width:100%;background:#f4f4f4;color:#111;border:0;border-radius:9px;padding:12px;font:inherit;resize:vertical"></textarea>
 <small style="color:#c7ced5">Diese Adresse erscheint links oben auf der Rechnung unter dem Kundennamen.</small></div>
       <div class="field"><label>Dokument-Nr.</label><input id="docNo"></div>
       <div class="field"><label>Datum</label><input id="docDate" type="date"></div>
       <div class="field span2"><label>Leistung / Ladung</label><input id="docService"></div>
       <div class="field"><label>Start</label><input id="docStart"></div><div class="field"><label>Ziel</label><input id="docZiel"></div>
-      <div class="field"><label>Strecke km</label><input id="docKm" type="number"></div><div class="field"><label>Netto â‚¬</label><input id="docNet" type="number" step=".01"></div>
+      <div class="field"><label>Strecke km</label><input id="docKm" type="number"></div><div class="field"><label>Netto €</label><input id="docNet" type="number" step=".01"></div>
     </div>
-    <div class="panel" style="margin-top:12px"><div class="metric-row"><span>Netto</span><strong id="docNetOut">0,00 â‚¬</strong></div><div class="metric-row"><span>MwSt.</span><strong id="docVatOut">0,00 â‚¬</strong></div><div class="metric-row"><span>Gesamt</span><strong id="docGrossOut">0,00 â‚¬</strong></div></div>
+    <div class="panel" style="margin-top:12px"><div class="metric-row"><span>Netto</span><strong id="docNetOut">0,00 €</strong></div><div class="metric-row"><span>MwSt.</span><strong id="docVatOut">0,00 €</strong></div><div class="metric-row"><span>Gesamt</span><strong id="docGrossOut">0,00 €</strong></div></div>
     <div id="docCompany" class="muted"></div>
     <div class="doc-note" id="docPaymentNote"></div>
     <div class="action-grid no-print" style="margin-top:14px"><button class="primary" id="printDocBtn">Drucken / als PDF speichern</button></div>
@@ -441,25 +442,25 @@ th:first-child,td:first-child{text-align:left}
 
 <section id="detailView" class="detail-modal hidden">
   <div class="detail-card">
-    <button class="back-btn" id="detailBack">â† ZurÃ¼ck</button>
+    <button class="back-btn" id="detailBack">← Zurück</button>
     <div id="detailContent"></div>
     <div class="action-grid">
       <button class="secondary" id="duplicateBtn">Duplizieren</button>
-      <button class="secondary" id="detailOfferBtn">ðŸ“„ Angebot</button>
-      <button class="secondary" id="detailInvoiceBtn">ðŸ§¾ Rechnung</button>
-      <button class="danger" id="deleteBtn">LÃ¶schen</button>
+      <button class="secondary" id="detailOfferBtn">Angebot erstellen</button>
+      <button class="secondary" id="detailInvoiceBtn">Rechnung erstellen</button>
+      <button class="danger" id="deleteBtn">Löschen</button>
     </div>
   </div>
 </section>
 </main>
 
 <nav class="bottom-nav">
-  <button class="active" data-tab="dashboard"><span>âŒ‚</span><small>Start</small></button>
-  <button data-tab="kalkulator" class="active"><span>â–¦</span><small>Kalkulator</small></button>
-  <button data-tab="preisliste"><span>â–¤</span><small>Preisliste</small></button>
-  <button data-tab="auftraege"><span>â–£</span><small>AuftrÃ¤ge</small></button>
-  <button data-tab="fahrzeuge"><span>â–°</span><small>Fahrzeug</small></button>
-  <button data-tab="einstellungen"><span>âš™</span><small>Einstellungen</small></button>
+  <button class="active" data-tab="dashboard"><span>⌂</span><small>Start</small></button>
+  <button data-tab="kalkulator" class="active"><span>▦</span><small>Kalkulator</small></button>
+  <button data-tab="preisliste"><span>▤</span><small>Preisliste</small></button>
+  <button data-tab="auftraege"><span>▣</span><small>Aufträge</small></button>
+  <button data-tab="fahrzeuge"><span>▰</span><small>Fahrzeug</small></button>
+  <button data-tab="einstellungen"><span>⚙</span><small>Einstellungen</small></button>
 </nav>
 </div>
 <script>
@@ -476,7 +477,7 @@ const $ = id => document.getElementById(id);
 const num = id => parseFloat($(id).value) || 0;
 const euro = v => v.toLocaleString('de-DE',{style:'currency',currency:'EUR'});
 const pct = v => v.toLocaleString('de-DE',{minimumFractionDigits:1,maximumFractionDigits:1})+' %';
-const perkm = v => v.toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2})+' â‚¬/km';
+const perkm = v => v.toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2})+' €/km';
 
 const persistentIds = ['routeProfile',
  'vehicleType','pallets','maxPayload','height','dieselPrice','consumption','vehicleCost','otherCost','tollFlat',
@@ -506,7 +507,7 @@ async function calculateRoute(){
 
   if(!start || !ziel){
     status.className='route-status err';
-    status.textContent='Bitte Start- und Zieladresse vollstÃ¤ndig eingeben.';
+    status.textContent='Bitte Start- und Zieladresse vollständig eingeben.';
     return;
   }
 
@@ -518,7 +519,7 @@ async function calculateRoute(){
 
   btn.disabled=true;
   status.className='route-status wait';
-  status.textContent='Adresse wird gesucht und Strecke berechnet â€¦';
+  status.textContent='Adresse wird gesucht und Strecke berechnet …';
 
   try{
     const base=ROUTING_BACKEND_URL.replace(/\/+$/,'');
@@ -536,18 +537,18 @@ async function calculateRoute(){
     }
 
     if(!Number.isFinite(data.km)){
-      throw new Error('Keine gÃ¼ltige StraÃŸenroute erhalten.');
+      throw new Error('Keine gültige Straßenroute erhalten.');
     }
 
     $('lastKm').value=Number(data.km).toFixed(1);
     status.className='route-status ok';
-    status.textContent='âœ“ '+(data.startLabel||start)+' â†’ '+(data.zielLabel||ziel)+' Â· '
+    status.textContent='✓ '+(data.startLabel||start)+' → '+(data.zielLabel||ziel)+' · '
       +Number(data.km).toLocaleString('de-DE',{minimumFractionDigits:1,maximumFractionDigits:1})+' km';
 
     calc();
   }catch(err){
     status.className='route-status err';
-    status.textContent='âš  '+(err && err.message ? err.message : 'Strecke konnte nicht berechnet werden.');
+    status.textContent='⚠ '+(err && err.message ? err.message : 'Strecke konnte nicht berechnet werden.');
   }finally{
     btn.disabled=false;
   }
@@ -639,7 +640,7 @@ function renderOrders(){
   });
 
   if(!filtered.length){
-    list.innerHTML = '<div class="muted">Noch keine passenden AuftrÃ¤ge gespeichert.</div>';
+    list.innerHTML = '<div class="muted">Noch keine passenden Aufträge gespeichert.</div>';
   } else {
     filtered.forEach(o => {
       const d = new Date(o.date);
@@ -648,8 +649,8 @@ function renderOrders(){
       item.innerHTML = `
         <div class="order-date"><b>${d.getDate()}</b><small>${d.toLocaleDateString('de-DE',{month:'short'})}</small></div>
         <div class="order-main">
-          <strong>${escapeHtml(o.start)} â†’ ${escapeHtml(o.ziel)}</strong>
-          <small>${o.customer?escapeHtml(o.customer)+' Â· ':''}${o.orderNo?escapeHtml(o.orderNo)+' Â· ':''}${Math.round(o.last)} km | ${escapeHtml(o.vehicle)}<br>
+          <strong>${escapeHtml(o.start)} → ${escapeHtml(o.ziel)}</strong>
+          <small>${o.customer?escapeHtml(o.customer)+' · ':''}${o.orderNo?escapeHtml(o.orderNo)+' · ':''}${Math.round(o.last)} km | ${escapeHtml(o.vehicle)}<br>
           Preis: ${euro(o.price)} &nbsp; <span class="profit-line">Gewinn: ${euro(o.profit)}</span></small>
         </div>
         <div class="order-dot ${o.status}"></div>`;
@@ -672,7 +673,7 @@ function openDetail(id){
   const d = new Date(o.date);
   $('detailContent').innerHTML = `
     <div class="eyebrow">AUFTRAG-DETAILS</div>
-    <h2>${escapeHtml(o.start)} â†’ ${escapeHtml(o.ziel)}</h2>
+    <h2>${escapeHtml(o.start)} → ${escapeHtml(o.ziel)}</h2>
     <p class="muted">${d.toLocaleString('de-DE')}</p>
     <p><span class="badge">${escapeHtml(o.customer||'Kein Kunde')}</span> ${o.orderNo?'<span class="badge">'+escapeHtml(o.orderNo)+'</span>':''}</p>
     <div class="detail-grid">
@@ -690,7 +691,7 @@ function openDetail(id){
 
 function deleteSelected(){
   if(!selectedOrderId) return;
-  if(!confirm('Diesen Auftrag wirklich lÃ¶schen?')) return;
+  if(!confirm('Diesen Auftrag wirklich löschen?')) return;
   setOrders(getOrders().filter(o=>o.id!==selectedOrderId));
   $('detailView').classList.add('hidden');
   selectedOrderId=null; renderOrders();
@@ -707,7 +708,7 @@ function duplicateSelected(){
 
 function exportCsv(){
   const orders=getOrders();
-  if(!orders.length){ alert('Keine AuftrÃ¤ge vorhanden.'); return; }
+  if(!orders.length){ alert('Keine Aufträge vorhanden.'); return; }
   const head=['Datum','Kunde','Auftragsnummer','Start','Ziel','Last-km','Gesamt-km','Fahrzeug','Ladung','Preis','Kosten','Gewinn','Marge'];
   const rows=orders.map(o=>[
     new Date(o.date).toLocaleString('de-DE'),o.customer||'',o.orderNo||'',o.start,o.ziel,o.last,o.totalKm,o.vehicle,o.cargo,
@@ -814,7 +815,7 @@ function updateDoc(){
   $('docPaymentNote').textContent=
     documentMode==='offer'
     ? 'Angebot freibleibend. Preis netto zzgl. '+(num('vatRate')||0)+' % MwSt.'
-    : 'Zahlungsziel: '+(num('paymentDays')||0)+' Tage. Bitte Rechnungs-Pflichtangaben vor Versand prÃ¼fen.';
+    : 'Zahlungsziel: '+(num('paymentDays')||0)+' Tage. Bitte Rechnungs-Pflichtangaben vor Versand prüfen.';
  }
  $('offerBtn').onclick=()=>openDocument('offer');
 $('invoiceBtn').onclick=()=>openDocument('invoice');
@@ -838,8 +839,8 @@ function updateDashboard(){
     if(!orders.length) $('dashLast').textContent='Noch kein Auftrag gespeichert.';
     else {
       const o=orders[0];
-      $('dashLast').innerHTML='<strong>'+escapeHtml(o.start)+' â†’ '+escapeHtml(o.ziel)+'</strong><br>'+
-        (o.customer?escapeHtml(o.customer)+' Â· ':'')+euro(o.price)+' netto Â· Gewinn '+euro(o.profit);
+      $('dashLast').innerHTML='<strong>'+escapeHtml(o.start)+' → '+escapeHtml(o.ziel)+'</strong><br>'+
+        (o.customer?escapeHtml(o.customer)+' · ':'')+euro(o.price)+' netto · Gewinn '+euro(o.profit);
     }
   }
 }
@@ -866,7 +867,7 @@ if ('serviceWorker' in navigator) {
   });
 }
  </script>
-<!-- Transport Kalkulator PRO 3.2 â€“ Lizenzaktivierung -->
+<!-- Transport Kalkulator PRO 3.2 – Lizenzaktivierung -->
 <div id="lizenzSperre" style="position:fixed;inset:0;z-index:99999;background:#090c0f;color:white;display:flex;align-items:center;justify-content:center;padding:20px;font-family:Arial,sans-serif;">
   <div style="width:100%;max-width:420px;background:#12171c;border:1px solid #ffbe00;border-radius:18px;padding:24px;text-align:center;">
     
@@ -877,12 +878,12 @@ if ('serviceWorker' in navigator) {
     <h2 style="margin:12px 0 8px;">Lizenz aktivieren</h2>
 
     <p style="color:#bbb;line-height:1.5;">
-      Bitte geben Sie Ihren LizenzschlÃ¼ssel ein.
+      Bitte geben Sie Ihren Lizenzschlüssel ein.
     </p>
 
     <input id="lizenzKey"
       type="text"
-      placeholder="LizenzschlÃ¼ssel"
+      placeholder="Lizenzschlüssel"
       autocomplete="off"
       style="width:100%;box-sizing:border-box;padding:14px;margin:12px 0;border-radius:10px;border:1px solid #555;background:#090c0f;color:white;font-size:16px;">
 
@@ -912,7 +913,7 @@ function getDeviceId() {
   const button = document.getElementById('lizenzButton');
   const meldung = document.getElementById('lizenzMeldung');
 
- // Gespeicherte Lizenz beim Start erneut am Server prÃ¼fen
+ // Gespeicherte Lizenz beim Start erneut am Server prüfen
 (async function pruefeGespeicherteLizenz() {
   const gespeicherterKey = localStorage.getItem('tkp32_lizenz_key');
 
@@ -954,13 +955,13 @@ function getDeviceId() {
 
     if (!licenseKey) {
       meldung.style.color = '#ff6b6b';
-      meldung.textContent = 'Bitte LizenzschlÃ¼ssel eingeben.';
+      meldung.textContent = 'Bitte Lizenzschlüssel eingeben.';
       return;
     }
 
     button.disabled = true;
     meldung.style.color = '#ffbe00';
-    meldung.textContent = 'Lizenz wird geprÃ¼ft â€¦';
+    meldung.textContent = 'Lizenz wird geprüft …';
 
     try {
       const antwort = await fetch(server + '/license/verify', {
@@ -978,7 +979,7 @@ function getDeviceId() {
         localStorage.setItem('tkp32_lizenz_aktiv', 'ja');
         localStorage.setItem('tkp32_lizenz_key', licenseKey);
         meldung.style.color = '#63d471';
-        meldung.textContent = 'âœ“ Lizenz erfolgreich aktiviert';
+        meldung.textContent = '✓ Lizenz erfolgreich aktiviert';
 
         setTimeout(function () {
           sperre.style.display = 'none';
@@ -987,9 +988,9 @@ function getDeviceId() {
   meldung.style.color = '#ff6b6b';
 
   if (daten.limitReached === true) {
-    meldung.textContent = 'Maximal 2 GerÃ¤te erlaubt. Diese Lizenz ist bereits auf 2 GerÃ¤ten aktiviert.';
+    meldung.textContent = 'Maximal 2 Geräte erlaubt. Diese Lizenz ist bereits auf 2 Geräten aktiviert.';
   } else {
-    meldung.textContent = daten.error || 'LizenzschlÃ¼ssel ungÃ¼ltig oder deaktiviert.';
+    meldung.textContent = daten.error || 'Lizenzschlüssel ungültig oder deaktiviert.';
   }
 }
     } catch (fehler) {
@@ -1036,7 +1037,7 @@ function makePaper(){
  $i('invoicePaper').innerHTML=`
  <div class="ip-top">
   <div style="flex:1">
-   <div class="ip-sender">${company} Â· ${addr}</div>
+   <div class="ip-sender">${company} · ${addr}</div>
    <div><b>${esc(val('docCustomer'))}</b><br>${customer}</div>
   </div>
   <div style="flex:1;text-align:right"><b style="font-size:14pt">${company}</b><br>${esc(c.ownerName)}<br>${addr}<br>${esc(c.companyPhone)}<br>${esc(c.companyEmail)}</div>
@@ -1048,10 +1049,10 @@ function makePaper(){
   <div>Rechnungsdatum:<br><b>${date(val('docDate'))}</b></div>
  </div>
  <p>Sehr geehrte Damen und Herren,</p>
- <p>wir bedanken uns fÃ¼r die Zusammenarbeit und stellen Ihnen folgende Transportdienstleistung in Rechnung:</p>
+ <p>wir bedanken uns für die Zusammenarbeit und stellen Ihnen folgende Transportdienstleistung in Rechnung:</p>
  <div class="ip-keep">
  <table class="ip-route">
-  <thead><tr><th>Beladeadresse / Start</th><th>Entladeadresse / Ziel</th><th>GÃ¼terinformationen</th></tr></thead>
+  <thead><tr><th>Beladeadresse / Start</th><th>Entladeadresse / Ziel</th><th>Güterinformationen</th></tr></thead>
   <tbody><tr><td>${esc(val('docStart'))}</td><td>${esc(val('docZiel'))}</td><td>${esc(val('docService'))}<br>Strecke: ${esc(val('docKm'))} km</td></tr></tbody>
  </table>
  <div class="ip-total">
@@ -1059,8 +1060,8 @@ function makePaper(){
   <div><span>MwSt. ${rate} %</span><span>${money(vat)}</span></div>
   <div class="ip-grand"><span>Rechnungsbetrag</span><span>${money(gross)}</span></div>
  </div></div>
- <p>Bitte Ã¼berweisen Sie den Rechnungsbetrag innerhalb von ${payment} Tagen unter Angabe der Rechnungsnummer <b>${esc(val('docNo'))}</b> auf das unten genannte Konto.</p>
- <p>Mit freundlichen GrÃ¼ÃŸen<br>${esc(c.ownerName||c.companyName)}</p>
+ <p>Bitte überweisen Sie den Rechnungsbetrag innerhalb von ${payment} Tagen unter Angabe der Rechnungsnummer <b>${esc(val('docNo'))}</b> auf das unten genannte Konto.</p>
+ <p>Mit freundlichen Grüßen<br>${esc(c.ownerName||c.companyName)}</p>
  <div class="ip-footer">
   <div><b>${company}</b><br>${addr}<br>${esc(c.companyPhone)}<br>${esc(c.companyEmail)}</div>
   <div><b>Bankverbindung</b><br>${esc(c.bankName)}<br>Kontoinhaber: ${esc(c.bankOwner)}<br>IBAN: ${esc(c.bankIban)}<br>BIC: ${esc(c.bankBic)}</div>
@@ -1071,17 +1072,8 @@ window.addEventListener('beforeprint',makePaper);
 const print=$i('printDocBtn');
 print.onclick=()=>{if(documentMode==='invoice'&&!val('docNo').trim()){alert('Bitte Rechnungsnummer eintragen.');return;}makePaper();window.print();};
 const legal=document.querySelector('.legal p');
-if(legal)legal.textContent='Transport Kalkulator PRO Â· Verkaufsversion 3.3';
+if(legal)legal.textContent='Transport Kalkulator PRO · Verkaufsversion 3.3';
 })();
 </script>
 </body>
 </html>
-
-       
-  
-  
-  
-
-  
-
-
